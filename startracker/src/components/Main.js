@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col } from "antd";
+import axios from "axios";
 import SatSetting from "./SatSetting";
 import SatelliteList from "./SatelliteList";
 import { NEARBY_SATELLITE, SAT_API_KEY, STARLINK_CATEGORY } from "../constants";
@@ -44,6 +45,7 @@ class Main extends Component {
   };
 
   render() {
+    const { satInfo, isLoadingList } = this.state;
     return (
       <Row className="main">
         <Col span={8} className="left-side">
@@ -57,4 +59,5 @@ class Main extends Component {
     );
   }
 }
+
 export default Main;
