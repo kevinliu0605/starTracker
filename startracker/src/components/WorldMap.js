@@ -62,7 +62,7 @@ class WorldMap extends Component {
       context.stroke();
 
       context.beginPath();
-      context.lineWidth = 0.5;
+      context.lineWidth = 0.7;
       path(graticule.outline());
       context.stroke();
     });
