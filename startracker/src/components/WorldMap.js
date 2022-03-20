@@ -31,8 +31,10 @@ class WorldMap extends Component {
     this.refTrack = React.createRef();
   }
 
+  // 在didMount里抓取数据 然后genreate map
   componentDidMount() {
     axios
+      // 抓取JSON数据
       .get(WORLD_MAP_URL)
       .then((res) => {
         const { data } = res;
@@ -165,13 +167,19 @@ class WorldMap extends Component {
   }
 
   generateMap = (land) => {
+    // 投影
     const projection = geoKavrayskiy7()
+      // 等比的发大缩小
       .scale(170)
+      // 长度和高度
       .translate([width / 2, height / 2])
+      //
       .precision(0.1);
 
+    // 经纬度 标线
     const graticule = geoGraticule();
 
+    // 这里就用ref来把JSON的数据传给d3
     const canvas = d3Select(this.refMap.current)
       .attr("width", width)
       .attr("height", height);
@@ -180,28 +188,35 @@ class WorldMap extends Component {
       .attr("width", width)
       .attr("height", height);
 
+    // 配置好画图用的笔
     const context = canvas.node().getContext("2d");
     const context2 = canvas2.node().getContext("2d");
 
+    // 规划路径 传入projection 和 context
     let path = geoPath().projection(projection).context(context);
 
+    // land就是通过JSON数据生成的每个country的land
     land.forEach((ele) => {
       context.fillStyle = "#B3DDEF";
       context.strokeStyle = "#000";
       context.globalAlpha = 0.7;
       context.beginPath();
+      // 画每个country
       path(ele);
+      // 然后填充
       context.fill();
       context.stroke();
 
       context.strokeStyle = "rgba(220, 220, 220, 0.1)";
       context.beginPath();
       path(graticule());
+      // 地图经纬度的粗细度
       context.lineWidth = 0.1;
       context.stroke();
 
       context.beginPath();
-      context.lineWidth = 0.5;
+      // 城市边界的粗细度
+      context.lineWidth = 0.7;
       path(graticule.outline());
       context.stroke();
     });
