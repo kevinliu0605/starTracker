@@ -65,16 +65,16 @@ class SatSettingForm extends Component {
                    }
                </Form.Item>
 
-               <Form.Item label="Altitude(degrees)">
+               <Form.Item label="Radius(degrees)">
                    {
-                       getFieldDecorator("altitude", {
+                       getFieldDecorator("radius", {
                            rules: [
                                {
                                    required: true,
-                                   message: "Please input your Altitude",
+                                   message: "Please input your Radius",
                                }
                            ],
-                       })(<InputNumber placeholder="Please input Altitude"
+                       })(<InputNumber placeholder="Please input Radius"
                                        min={0} max={90}
                                        style={{width: "100%"}}
                        /> )
